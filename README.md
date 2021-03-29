@@ -5,6 +5,10 @@ Sensor Fusion UKF Highway Project Starter Code
 
 [image1]: nis_laser.png "laser"
 [image2]: nis_radar.png "radar"
+[image3]: rmsex.png "radar"
+[image4]: rmsey.png "radar"
+[image5]: rmsevx.png "radar"
+[image6]: rmsevy.png "radar"
 
 In this project you will implement an Unscented Kalman Filter to estimate the state of multiple cars on a highway using noisy lidar and radar measurements. Passing the project requires obtaining RMSE values that are lower that the tolerance outlined in the project rubric. 
 
@@ -59,3 +63,18 @@ Using plot.py, we can plot the nis plot for laser and radar in order to check ou
 ![alt text][image1]
 
 ![alt text][image2]
+
+Finally, we take a look at the comparison of sensor fusion rmse results vs single sensor:
+
+![alt text][image3]
+
+![alt text][image4]
+
+![alt text][image5]
+
+![alt text][image6]
+
+We can observe a single lidar sensor has better RMSE values compared to single radar regarding position, whereas radar sensor deliver better velocity RMSE results especially in x direction.
+
+The main takeaway from the graphs though, is that multiple sensor always provide better results. 
+Even in the case of e.g. position where radar has a much higher stddeviation then lidar, the combined measurement still provide lower RMSE.
