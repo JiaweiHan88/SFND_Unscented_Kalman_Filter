@@ -3,6 +3,9 @@ Sensor Fusion UKF Highway Project Starter Code
 
 <img src="media/ukf_highway_tracked.gif" width="700" height="400" />
 
+[image1]: nis_laser.png "laser"
+[image2]: nis_radar.png "radar"
+
 In this project you will implement an Unscented Kalman Filter to estimate the state of multiple cars on a highway using noisy lidar and radar measurements. Passing the project requires obtaining RMSE values that are lower that the tolerance outlined in the project rubric. 
 
 The main program can be built and ran by doing the following from the project top directory.
@@ -41,36 +44,18 @@ The red spheres above cars represent the (x,y) lidar detection and the purple li
   * Windows: recommend using [MinGW](http://www.mingw.org/)
  * PCL 1.2
 
-## Basic Build Instructions
+## Implementation notes
 
-1. Clone this repo.
-2. Make a build directory: `mkdir build && cd build`
-3. Compile: `cmake .. && make`
-4. Run it: `./ukf_highway`
+UKF implementation follows the concept shown in the class.
+After implementation, some parameters had to be tuned to order to fulfill the rubric requirement of not crossing the RMSE threshhold.
+In order for the RMSE goes down faster, we needed a faster convergence of P_, which we achieve by setting a higher initial value. 
 
-## Editor Settings
+Since it was mostly the velocity RMSE which could not hold the required threshhold, we set P_(2,2) to a higher initial value(e.g. 50). 
 
-We've purposefully kept editor configuration files out of this repo in order to
-keep it as simple and environment agnostic as possible. However, we recommend
-using the following settings:
+For P_ of px and py, we can use a much lower value then 1 for laser, because the std deviation of laser for position is very low.
 
-* indent using spaces
-* set tab width to 2 spaces (keeps the matrices in source code aligned)
+Using plot.py, we can plot the nis plot for laser and radar in order to check our filter for consistency. With our iteratively tuned process noise we get the following nis graphs:
 
-## Code Style
+![alt text][image1]
 
-Please stick to [Google's C++ style guide](https://google.github.io/styleguide/cppguide.html) as much as possible.
-
-## Generating Additional Data
-
-This is optional!
-
-If you'd like to generate your own radar and lidar modify the code in `highway.h` to alter the cars. Also check out `tools.cpp` to
-change how measurements are taken, for instance lidar markers could be the (x,y) center of bounding boxes by scanning the PCD environment
-and performing clustering. This is similar to what was done in Sensor Fusion Lidar Obstacle Detection.
-
-## Project Instructions and Rubric
-
-This information is only accessible by people who are already enrolled in Sensor Fusion. 
-If you are enrolled, see the project page in the classroom
-for instructions and the project rubric.
+![alt text][image2]
